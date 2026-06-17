@@ -1,0 +1,17 @@
+body{font-family:'Inter',sans-serif;background:#0a0f1e;}
+.mac-card{
+  background:rgba(31,41,55,.7);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;
+}
+.input-field{
+  background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);
+  transition:all .3s ease;
+}
+.input-field:focus{background:rgba(0,0,0,.5);border-color:#3b82f6;outline:none;}
+#macProgressContainer{
+  height:5px;width:100%;background:rgba(255,255,255,.1);
+  border-radius:10px;display:flex;overflow:hidden;
+}
+.progress-segment{height:100%;transition:width .8s cubic-bezier(.34,1.56,.64,1);}
