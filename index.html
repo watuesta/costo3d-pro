@@ -14,148 +14,147 @@
 <link rel="stylesheet" href="css/styles.css">
 </head>
 
-<body class="text-slate-300 p-4 md:p-8">
-<div class="max-w-6xl mx-auto">
+<body class="text-slate-300 p-4 sm:p-6 md:p-8 lg:p-8 text-base sm:text-sm">
+<div class="w-full max-w-6xl mx-auto">
 
   <!-- Header -->
-  <header class="mb-8 flex justify-between items-end border-b border-white/5 pb-4">
+  <header class="mb-8 sm:mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 sm:gap-0 border-b border-white/5 pb-6 sm:pb-4">
     <div>
-      <h1 class="text-3xl font-extrabold text-white tracking-tighter">Costo <span class="text-blue-500">3D</span> Pro</h1>
-      <p class="text-[10px] uppercase tracking-[0.2em] opacity-50">Multi‑Item Production Engine</p>
+      <h1 class="text-4xl sm:text-3xl font-extrabold text-white tracking-tighter">Costo <span class="text-blue-500">3D</span> Pro</h1>
+      <p class="text-xs sm:text-[10px] uppercase tracking-[0.2em] opacity-50 mt-2 sm:mt-1">Multi‑Item Production Engine</p>
     </div>
-    <button onclick="copyMarkdown()" class="bg-slate-700 hover:bg-blue-600 text-white text-[10px] font-bold py-2 px-4 rounded-full transition-all uppercase tracking-wider">
+    <button onclick="copyMarkdown()" class="w-full sm:w-auto bg-slate-700 hover:bg-blue-600 text-white text-xs sm:text-[10px] font-bold py-3 sm:py-2 px-4 sm:px-4 rounded-full transition-all uppercase tracking-wider">
       📋 Copiar Markdown
     </button>
   </header>
 
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
 
     <!-- COL‑IZQUIERDA (configuración) -->
-    <div class="lg:col-span-5 space-y-4">
+    <div class="lg:col-span-5 space-y-3 sm:space-y-4">
 
       <!-- Hardware & Electricidad -->
-      <div class="mac-card p-5 shadow-xl text-sm">
-        <div class="flex items-center mb-3 text-slate-400"><span class="text-lg mr-2">🖨️</span><h2 class="font-semibold uppercase tracking-wider text-xs">Hardware & Electricidad</h2></div>
-        <div class="space-y-3">
-          <select id="printerModel" onchange="syncWatts()" class="w-full bg-white/5 border border-white/10 rounded-xl p-2.5 text-white outline-none cursor-pointer">
+      <div class="mac-card p-5 sm:p-5 shadow-xl text-base sm:text-sm">
+        <div class="flex items-center mb-4 text-slate-400 flex-wrap"><span class="text-2xl sm:text-lg mr-3">🖨️</span><h2 class="font-semibold uppercase tracking-wider text-sm sm:text-xs">Hardware & Electricidad</h2></div>
+        <div class="space-y-4 sm:space-y-3">
+          <select id="printerModel" onchange="syncWatts()" class="w-full bg-white/5 border border-white/10 rounded-xl p-3 sm:p-2.5 text-white outline-none cursor-pointer text-base sm:text-sm font-medium">
             <option value="95">Bambulab A1 (95W)</option>
             <option value="180">Bambulab P2S (180W)</option>
           </select>
-          <div class="grid grid-cols-3 gap-2 text-[10px]">
-            <div><label class="block opacity-40 mb-1 uppercase ml-1">Watts</label>
-              <input type="number" id="wattsInput" value="95" class="w-full input-field rounded-lg p-2 outline-none text-center font-bold text-white"></div>
-            <div><label class="block opacity-40 mb-1 uppercase ml-1">COP/KWH</label>
-              <input type="number" id="kwhPrice" value="864" class="w-full input-field rounded-lg p-2 outline-none text-center font-bold text-white"></div> <!-- 864 por defecto -->
-            <div><label class="block opacity-40 mb-1 uppercase ml-1">Min (Op)</label>
-              <input type="number" id="globalMin" value="0" max="59" class="w-full input-field rounded-lg p-2 outline-none text-center font-bold text-white"></div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-2 text-xs sm:text-[10px]">
+            <div><label class="block opacity-40 mb-2 sm:mb-1 uppercase ml-1 text-xs sm:text-[9px] font-semibold">Watts</label>
+              <input type="number" id="wattsInput" value="95" class="w-full input-field rounded-lg p-3 sm:p-2 outline-none text-center font-bold text-white text-base sm:text-xs"></div>
+            <div><label class="block opacity-40 mb-2 sm:mb-1 uppercase ml-1 text-xs sm:text-[9px] font-semibold">COP/KWH</label>
+              <input type="number" id="kwhPrice" value="864" class="w-full input-field rounded-lg p-3 sm:p-2 outline-none text-center font-bold text-white text-base sm:text-xs"></div>
+            <div><label class="block opacity-40 mb-2 sm:mb-1 uppercase ml-1 text-xs sm:text-[9px] font-semibold">Min (Op)</label>
+              <input type="number" id="globalMin" value="0" max="59" class="w-full input-field rounded-lg p-3 sm:p-2 outline-none text-center font-bold text-white text-base sm:text-xs"></div>
           </div>
         </div>
       </div>
 
       <!-- Filamento & Piezas -->
-      <div class="mac-card p-5 shadow-xl border-l-4 border-blue-500/30">
-        <div class="flex items-center justify-between mb-3 text-slate-400"><h2 class="text-sm font-semibold uppercase tracking-wider text-xs">Proyecto & Piezas</h2>
-          <button onclick="addPartRow()" class="text-[10px] bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded-full font-bold transition-all">+ Añadir</button></div>
+      <div class="mac-card p-5 sm:p-5 shadow-xl border-l-4 border-blue-500/30">
+        <div class="flex items-center justify-between mb-4 text-slate-400 gap-2 flex-wrap"><h2 class="text-sm sm:text-sm font-semibold uppercase tracking-wider">Proyecto & Piezas</h2>
+          <button onclick="addPartRow()" class="text-xs sm:text-[10px] bg-blue-600 hover:bg-blue-500 text-white px-3 sm:px-3 py-2 sm:py-1 rounded-full font-bold transition-all whitespace-nowrap">+ Añadir</button></div>
 
         <!-- Campo de nombre del proyecto -->
-        <div class="mb-4 pb-3 border-b border-white/5">
-          <label class="block text-[10px] opacity-50 mb-1 uppercase ml-1">Nombre del Proyecto</label>
-          <input type="text" id="projectName" placeholder="Ej: Dragon articulado" class="w-full input-field rounded-xl p-2.5 text-white outline-none text-sm font-bold"></div>
+        <div class="mb-4 sm:mb-4 pb-4 border-b border-white/5">
+          <label class="block text-xs sm:text-[10px] opacity-50 mb-2 uppercase ml-1 font-semibold">Nombre del Proyecto</label>
+          <input type="text" id="projectName" placeholder="Ej: Dragon articulado" class="w-full input-field rounded-xl p-3 sm:p-2.5 text-white outline-none text-base sm:text-sm font-bold"></div>
 
         <!-- Bloque de precio del filamento -->
-        <div class="grid grid-cols-2 gap-4 mb-4 pb-3 border-b border-white/5">
-          <div class="col-span-2"><label class="block text-[10px] opacity-50 mb-1 uppercase ml-1">Precio/KG (COP)</label>
-            <input type="number" id="priceSpool" value="85000" class="w-full input-field rounded-xl p-2.5 text-white outline-none text-sm font-bold"></div>
-        </div>
+        <div class="mb-4 sm:mb-4 pb-4 border-b border-white/5">
+          <label class="block text-xs sm:text-[10px] opacity-50 mb-2 uppercase ml-1 font-semibold">Precio/KG (COP)</label>
+          <input type="number" id="priceSpool" value="85000" class="w-full input-field rounded-xl p-3 sm:p-2.5 text-white outline-none text-base sm:text-sm font-bold"></div>
 
-        <!-- Encabezado de la tabla (moved below el bloque de precio) -->
-        <div class="grid grid-cols-4 gap-2 text-xs font-medium uppercase tracking-wide mb-2">
+        <!-- Encabezado de la tabla -->
+        <div class="grid grid-cols-4 gap-2 text-xs sm:text-xs font-medium uppercase tracking-wide mb-3">
           <div class="text-slate-400">Placa</div>
           <div class="text-slate-400">Gramos</div>
           <div class="text-slate-400">Tiempo</div>
-          <div></div> <!-- columna de acción -->
+          <div></div>
         </div>
 
-        <div id="partsContainer" class="space-y-3 max-h-[300px] overflow-y-auto pr-1 custom-scrollbar"></div>
+        <div id="partsContainer" class="space-y-3 sm:space-y-3 max-h-[300px] overflow-y-auto pr-1 custom-scrollbar"></div>
       </div>
 
       <!-- Ganancia -->
-      <div class="mac-card p-5 shadow-xl border-l-4 border-emerald-500/30 text-sm">
-        <h2 class="text-sm font-semibold uppercase tracking-wider text-emerald-400 mb-4 italic text-xs">Configuración de Ganancia</h2>
-        <div class="space-y-4">
+      <div class="mac-card p-5 sm:p-5 shadow-xl border-l-4 border-emerald-500/30 text-base sm:text-sm">
+        <h2 class="text-sm sm:text-sm font-semibold uppercase tracking-wider text-emerald-400 mb-5 sm:mb-4 italic">Configuración de Ganancia</h2>
+        <div class="space-y-5 sm:space-y-4">
 
           <!-- Setup -->
           <div>
-            <div class="flex justify-between"><label class="text-[10px] uppercase font-bold text-emerald-400">Setup (Fijo)</label><span id="valLabor" class="text-xs">$ 12.000</span></div> <!-- 12 000 por defecto -->
+            <div class="flex justify-between items-center gap-2 mb-2"><label class="text-xs sm:text-[10px] uppercase font-bold text-emerald-400">Setup (Fijo)</label><span id="valLabor" class="text-sm sm:text-xs whitespace-nowrap font-semibold">$ 12.000</span></div>
             <input type="range" id="laborRange" min="0" max="100000" step="1000" value="12000"
-                   oninput="updateSliderLabel('valLabor', this.value, true)" class="w-full accent-emerald-500">
+                   oninput="updateSliderLabel('valLabor', this.value, true)" class="w-full accent-emerald-500 h-2 sm:h-1.5">
           </div>
 
           <!-- Margen -->
           <div>
-            <div class="flex justify-between"><label class="text-[10px] uppercase font-bold text-emerald-400">Margen Ganancia</label><span id="valMargin" class="text-xs">30%</span></div>
+            <div class="flex justify-between items-center gap-2 mb-2"><label class="text-xs sm:text-[10px] uppercase font-bold text-emerald-400">Margen Ganancia</label><span id="valMargin" class="text-sm sm:text-xs whitespace-nowrap font-semibold">30%</span></div>
             <input type="range" id="marginRange" min="0" max="500" step="1" value="30"
-                   oninput="updateSliderLabel('valMargin', this.value, false)" class="w-full accent-emerald-500">
+                   oninput="updateSliderLabel('valMargin', this.value, false)" class="w-full accent-emerald-500 h-2 sm:h-1.5">
           </div>
 
           <!-- Desperdicio -->
           <div>
-            <div class="flex justify-between"><label class="text-[10px] uppercase font-bold text-rose-400">Desperdicio (Wastage)</label><span id="valWaste" class="text-xs">10%</span></div>
+            <div class="flex justify-between items-center gap-2 mb-2"><label class="text-xs sm:text-[10px] uppercase font-bold text-rose-400">Desperdicio (Wastage)</label><span id="valWaste" class="text-sm sm:text-xs whitespace-nowrap font-semibold">10%</span></div>
             <input type="range" id="wasteRange" min="0" max="50" step="1" value="10"
-                   oninput="updateSliderLabel('valWaste', this.value, false)" class="w-full accent-rose-500">
+                   oninput="updateSliderLabel('valWaste', this.value, false)" class="w-full accent-rose-500 h-2 sm:h-1.5">
           </div>
 
         </div>
       </div>
 
       <!-- Botón Calcular y Nueva Cotización -->
-      <div class="flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0 mt-6 gap-3">
-        <button onclick="confirmClearAll()" class="w-full sm:w-auto mac-card px-6 py-3 border-l-4 border-rose-500/50 hover:border-rose-500 text-white font-medium rounded-xl transition-all duration-300 uppercase tracking-wider text-sm hover:bg-white/10">
+      <div class="flex flex-col sm:flex-row justify-between gap-3 sm:gap-3 mt-5 sm:mt-6">
+        <button onclick="confirmClearAll()" class="w-full sm:flex-1 mac-card px-4 sm:px-6 py-3 sm:py-3 border-l-4 border-rose-500/50 hover:border-rose-500 text-white font-medium rounded-xl transition-all duration-300 uppercase tracking-wider text-sm sm:text-sm hover:bg-white/10">
           🔄 Nueva Cotización
         </button>
 
-        <button onclick="calculate()" class="w-full sm:w-auto mac-card px-6 py-3 border-l-4 border-emerald-500/50 hover:border-emerald-500 text-white font-bold rounded-xl transition-all duration-300 uppercase tracking-widest text-sm hover:bg-white/10">
+        <button onclick="calculate()" class="w-full sm:flex-1 mac-card px-4 sm:px-6 py-3 sm:py-3 border-l-4 border-emerald-500/50 hover:border-emerald-500 text-white font-bold rounded-xl transition-all duration-300 uppercase tracking-widest text-sm sm:text-sm hover:bg-white/10">
           ✓ Calcular Todo
         </button>
       </div>
     </div>
 
     <!-- COL‑DERECHA (resumen) -->
-    <div class="lg:col-span-7 space-y-6">
+    <div class="lg:col-span-7 space-y-5 sm:space-y-6">
 
       <!-- Precio de Venta / Costo -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="bg-gradient-to-br from-blue-600 to-indigo-700 p-8 rounded-[30px] shadow-2xl text-white relative overflow-hidden group transition-transform hover:scale-[1.01]">
-          <h2 class="text-xs font-bold uppercase tracking-[0.2em] opacity-70 mb-4 text-center">Precio de Venta Sugerido</h2>
-          <div id="finalPrice" class="text-5xl font-black text-center">$ 0</div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+        <div class="bg-gradient-to-br from-blue-600 to-indigo-700 p-6 sm:p-8 rounded-3xl sm:rounded-[30px] shadow-2xl text-white relative overflow-hidden group transition-transform hover:scale-[1.01]">
+          <h2 class="text-xs sm:text-xs font-bold uppercase tracking-[0.2em] opacity-70 mb-4 sm:mb-4 text-center">Precio de Venta Sugerido</h2>
+          <div id="finalPrice" class="text-5xl sm:text-5xl font-black text-center">$ 0</div>
         </div>
 
-        <div class="bg-slate-800/50 border border-white/10 p-8 rounded-[30px] shadow-xl">
-          <h2 class="text-xs font-bold uppercase tracking-[0.2em] opacity-70 mb-4 text-center">Costo de Producción</h2>
-          <div id="realCostTotal" class="text-4xl font-mono text-white text-center">$ 0</div>
+        <div class="bg-slate-800/50 border border-white/10 p-6 sm:p-8 rounded-3xl sm:rounded-[30px] shadow-xl">
+          <h2 class="text-xs sm:text-xs font-bold uppercase tracking-[0.2em] opacity-70 mb-4 sm:mb-4 text-center">Costo de Producción</h2>
+          <div id="realCostTotal" class="text-4xl sm:text-4xl font-mono text-white text-center">$ 0</div>
         </div>
       </div>
 
       <!-- Distribución -->
-      <div class="mac-card p-8 shadow-2xl">
-        <h3 class="text-white text-xs font-semibold mb-6 uppercase tracking-[0.2em] text-center opacity-60">Desglose de Costos</h3>
-        <div id="macProgressContainer" class="mb-6">
+      <div class="mac-card p-5 sm:p-8 shadow-2xl">
+        <h3 class="text-white text-sm sm:text-sm font-semibold mb-5 sm:mb-6 uppercase tracking-[0.2em] text-center opacity-60">Desglose de Costos</h3>
+        <div id="macProgressContainer" class="mb-5 sm:mb-6">
           <div id="segFilament"   class="progress-segment bg-blue-500" style="width:0%"></div>
           <div id="segEnergy"     class="progress-segment bg-yellow-500" style="width:0%"></div>
-          <div id="segWaste"      class="progress-segment bg-pink-600" style="width:0%"></div> <!-- NUEVO -->
+          <div id="segWaste"      class="progress-segment bg-pink-600" style="width:0%"></div>
           <div id="segLabor"      class="progress-segment bg-purple-500" style="width:0%"></div>
           <div id="segProfit"     class="progress-segment bg-green-500" style="width:0%"></div>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-3 text-[11px] font-bold uppercase">
-          <div class="flex items-center"><span class="w-2.5 h-2.5 bg-blue-500 rounded-full mr-2"></span> Filamento</div>
-          <div class="flex items-center"><span class="w-2.5 h-2.5 bg-yellow-500 rounded-full mr-2"></span> Energía</div>
-          <div class="flex items-center"><span class="w-2.5 h-2.5 bg-pink-600 rounded-full mr-2"></span> Desperdicio</div> <!-- NUEVO -->
-          <div class="flex items-center"><span class="w-2.5 h-2.5 bg-purple-500 rounded-full mr-2"></span> Setup</div>
-          <div class="flex items-center"><span class="w-2.5 h-2.5 bg-green-500 rounded-full mr-2"></span> Ganancia</div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-3 text-xs sm:text-[11px] font-bold uppercase">
+          <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 sm:w-2.5 sm:h-2.5 bg-blue-500 rounded-full flex-shrink-0"></span><span class="truncate">Filamento</span></div>
+          <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 sm:w-2.5 sm:h-2.5 bg-yellow-500 rounded-full flex-shrink-0"></span><span class="truncate">Energía</span></div>
+          <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 sm:w-2.5 sm:h-2.5 bg-pink-600 rounded-full flex-shrink-0"></span><span class="truncate">Desperdicio</span></div>
+          <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 sm:w-2.5 sm:h-2.5 bg-purple-500 rounded-full flex-shrink-0"></span><span class="truncate">Setup</span></div>
+          <div class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 sm:w-2.5 sm:h-2.5 bg-green-500 rounded-full flex-shrink-0"></span><span class="truncate">Ganancia</span></div>
         </div>
 
-        <div class="mt-8 space-y-3" id="breakdownList"></div>
+        <div class="mt-5 sm:mt-8 space-y-3 sm:space-y-3" id="breakdownList"></div>
       </div>
     </div>
   </div>
