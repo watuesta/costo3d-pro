@@ -16,7 +16,7 @@
 </head>
 
 <body class="text-slate-300 p-3 sm:p-6 md:p-8 lg:p-8">
-<div class="w-full mx-auto">
+<div class="w-full max-w-6xl mx-auto">
 
   <!-- Header -->
   <header class="mb-6 sm:mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-3 sm:gap-0 border-b border-white/5 pb-4 sm:pb-4">
@@ -29,10 +29,10 @@
     </button>
   </header>
 
-  <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 sm:gap-5 md:gap-6">
 
     <!-- COL‑IZQUIERDA (configuración) -->
-    <div class="lg:col-span-5 space-y-3 sm:space-y-4">
+    <div class="lg:col-span-5 space-y-3 sm:space-y-4 md:space-y-4">
 
       <!-- Hardware & Electricidad -->
       <div class="mac-card p-4 sm:p-5 shadow-xl">
@@ -124,15 +124,15 @@
     <div class="lg:col-span-7 space-y-5 sm:space-y-6">
 
       <!-- Precio de Venta / Costo -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-6">
         <div class="bg-gradient-to-br from-blue-600 to-indigo-700 p-6 sm:p-8 rounded-3xl sm:rounded-[30px] shadow-2xl text-white relative overflow-hidden group transition-transform hover:scale-[1.01]">
           <h2 class="text-sm sm:text-xs font-bold uppercase tracking-[0.2em] opacity-70 mb-4 sm:mb-4 text-center">Precio de Venta Sugerido</h2>
-          <div id="finalPrice" class="text-6xl sm:text-5xl font-black text-center">$ 0</div>
+          <div id="finalPrice" class="text-6xl sm:text-5xl font-black text-center break-words">$ 0</div>
         </div>
 
         <div class="bg-slate-800/50 border border-white/10 p-6 sm:p-8 rounded-3xl sm:rounded-[30px] shadow-xl">
           <h2 class="text-sm sm:text-xs font-bold uppercase tracking-[0.2em] opacity-70 mb-4 sm:mb-4 text-center">Costo de Producción</h2>
-          <div id="realCostTotal" class="text-5xl sm:text-4xl font-mono text-white text-center">$ 0</div>
+          <div id="realCostTotal" class="text-5xl sm:text-4xl font-mono text-white text-center break-words">$ 0</div>
         </div>
       </div>
 
