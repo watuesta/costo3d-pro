@@ -30,19 +30,19 @@ function addPartRow(name="", weight="", time="") {
     nameOptions+=`<option value="Placa ${num}">${num} - Placa</option>`;
   }
   const row=document.createElement('div');
-  row.className='part-row grid grid-cols-4 gap-2 sm:gap-1 items-center bg-white/5 p-3 sm:p-2.5 rounded-lg sm:rounded-xl border border-white/5';
+  row.className='part-row grid grid-cols-4 gap-2 sm:gap-1 items-center bg-white/5 p-4 sm:p-2.5 rounded-lg sm:rounded-xl border border-white/5';
   row.id=`part-${partsCount}`;
   // Solo un campo de tiempo (h.m)
   row.innerHTML=`
     <div class="col-span-1 min-w-0">
-      <select class="part-name w-full bg-transparent text-sm sm:text-xs outline-none font-medium px-2 sm:px-1 uppercase text-blue-400 cursor-pointer">${nameOptions}</select>
+      <select class="part-name w-full bg-transparent text-base sm:text-xs outline-none font-medium px-2 sm:px-1 uppercase text-blue-400 cursor-pointer">${nameOptions}</select>
     </div>
-    <div class="col-span-1 flex items-center gap-2 sm:gap-1 min-w-0"><input type="number" value="${weight}" class="part-weight w-full bg-transparent text-sm sm:text-xs outline-none border-b border-white/10 text-center" min="0"><span class="text-xs sm:text-[9px] opacity-50 flex-shrink-0 font-medium">g</span></div>
+    <div class="col-span-1 flex items-center gap-2 sm:gap-1 min-w-0"><input type="number" value="${weight}" class="part-weight w-full bg-transparent text-base sm:text-xs outline-none border-b border-white/10 text-center" min="0"><span class="text-sm sm:text-[9px] opacity-50 flex-shrink-0 font-medium">g</span></div>
     <div class="col-span-1 flex items-center gap-2 sm:gap-1 min-w-0">
       <input type="number" value="${time}" step="0.01" placeholder="h.m" min="0"
-             class="part-time w-full bg-transparent text-sm sm:text-xs outline-none border-b border-white/10 text-center"><span class="text-xs sm:text-[9px] opacity-50 flex-shrink-0 font-medium">h/m</span>
+             class="part-time w-full bg-transparent text-base sm:text-xs outline-none border-b border-white/10 text-center"><span class="text-sm sm:text-[9px] opacity-50 flex-shrink-0 font-medium">h/m</span>
     </div>
-    <div class="col-span-1 flex justify-end flex-shrink-0"><button onclick="removePart(${partsCount})" class="text-rose-500 font-bold text-2xl sm:text-xl leading-none">&times;</button></div>`;
+    <div class="col-span-1 flex justify-end flex-shrink-0"><button onclick="removePart(${partsCount})" class="text-rose-500 font-bold text-3xl sm:text-xl leading-none">&times;</button></div>`;
   container.appendChild(row);
 }
 function removePart(id){
