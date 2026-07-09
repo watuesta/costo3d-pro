@@ -4,6 +4,18 @@ window.currentItemsInfo = [];
 let wasteCost = 0; // para exportar al markdown
 
 /* -----------------------  HELPERS  -------------------------- */
+function escapeHTML(str) {
+  return str.replace(/[&<>"']/g, function(m) {
+    return {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    }[m];
+  });
+}
+
 function formatCurrency(val) { return '$ ' + Number(val).toLocaleString('es-CO', { maximumFractionDigits: 0 }); }
 
 function getFormattedDate() {
@@ -14,6 +26,38 @@ function getFormattedDate() {
   return `${year}-${month}-${day}`;
 }
 
+/* -----------------------  PDF STYLES  ------------------------ */
+const pdfStyles = `
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+  #pdf-container { font-family: 'Inter', sans-serif; color: #1e293b; background: white; width: 850px; padding: 50px; box-sizing: border-box; }
+  .pdf-header { border-bottom: 3px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; padding:15px 0; }
+  .logo-main { font-size:24px; font-weight:900; color:#1e3a8a; line-height:1.2; }
+  .meta-grid { display:flex; justify-content:center; gap:35%; margin-top:15px; background:#f8fafc; padding:10px 40px; border-radius:6px; font-size:12px; color:#475569; }
+  .section-box { margin-bottom:30px; border:1px solid #f1f5f9; border-radius:8px; background:white; box-shadow:0 2px 4px rgba(0,0,0,0.03); }
+  table.items-table { width:100%; font-size:12px; text-align:left; border-collapse: collapse; }
+  th.table-header { padding:8px 12px; background:#f8fafc; color:#64748b; border-bottom:2px solid #e2e8f0; font-weight:600; letter-spacing:0.3em; text-transform:uppercase; font-size:10px; }
+  td.table-cell { padding:8px 12px; border-bottom:1px solid #f1f5f9; color:#334155; }
+  .chart-box { padding-top:25px; }
+  .charts-row-container { display:flex; justify-content:center; gap:30px; height:180px; padding-top:40px; border-radius:6px; background:#f8fafc; position:relative; }
+  .chart-bar-wrapper { display:flex; flex-direction:column; justify-content:flex-end; height:100%; align-items:center; }
+  .bar-container { width:28px; border-radius:6px 4px 4px 6px; }
+  .pct-label { font-size:10px; color:#334155; font-weight:bold; text-align:center; margin-top:4px; }
+  .bar-name { font-size:8.7px; color:#64748b; text-transform:uppercase; letter-spacing:0.2em; margin-top:2px; }
+  .gradient-blue { background: linear-gradient(#3b82f6, #93c5fd); }
+  .gradient-yellow { background: linear-gradient(#f59e0b, #fde047); }
+  .gradient-pink { background: linear-gradient(#ec4899, #fb7185); }
+  .gradient-purple { background: linear-gradient(#a855f7, #d8b4fe); }
+  .gradient-green { background: linear-gradient(#22c55e, #86efac); }
+  .total-card { margin-top:30px; background:#fffbeb; color:#d97706; text-align:center; padding:25px; border-radius:12px; }
+  .total-card .amount { font-size:36px; font-weight:900; }
+`;
+if (!document.getElementById('pdf-styles')) {
+  var s = document.createElement('style');
+  s.id = 'pdf-styles';
+  s.textContent = pdfStyles;
+  document.head.appendChild(s);
+}
+
 /* -----------------------  MODEL SYNC  ------------------------ */
 function syncWatts() {
   const model = document.getElementById('printerModel').value;
@@ -21,33 +65,37 @@ function syncWatts() {
 }
 
 /* -----------------------  PARTS ROWS  ----------------------- */
-function addPartRow(name="", weight="", time="") {
+let plateCounter = 0;
+
+function addPartRow(weight="", time="") {
   partsCount++;
+  plateCounter++;
   const container = document.getElementById('partsContainer');
-  let nameOptions='';
-  for (let i=1;i<=10;i++){
-    const num=i<10?`0${i}`:`${i}`;
-    nameOptions+=`<option value="Placa ${num}">${num} - Placa</option>`;
-  }
   const row=document.createElement('div');
-  row.className='part-row grid grid-cols-4 gap-2 sm:gap-1 items-center bg-white/5 p-4 sm:p-2.5 rounded-lg sm:rounded-xl border border-white/5';
+  row.className='part-row grid grid-cols-4 gap-2 items-center bg-white/5 p-2 rounded-xl border border-white/5';
   row.id=`part-${partsCount}`;
-  // Solo un campo de tiempo (h.m)
+  const num=plateCounter<10?`0${plateCounter}`:`${plateCounter}`;
   row.innerHTML=`
-    <div class="col-span-1 min-w-0">
-      <select class="part-name w-full bg-transparent text-base sm:text-xs outline-none font-medium px-2 sm:px-1 uppercase text-blue-400 cursor-pointer">${nameOptions}</select>
+    <div class="col-span-1 text-xs font-bold text-blue-400 text-center py-1">${num}</div>
+    <div class="col-span-1 flex items-center gap-1"><input type="number" value="${weight}" class="part-weight w-full bg-transparent text-xs outline-none border-b border-white/10 text-center"><span class="text-[9px] opacity-50">g</span></div>
+    <div class="col-span-1 flex items-center gap-1">
+      <input type="number" value="${time}" step="0.01" placeholder="h.m"
+             class="part-time w-full bg-transparent text-xs outline-none border-b border-white/10 text-center"><span class="text-[9px] opacity-50">h/m</span>
     </div>
-    <div class="col-span-1 flex items-center gap-2 sm:gap-1 min-w-0"><input type="number" value="${weight}" class="part-weight w-full bg-transparent text-base sm:text-xs outline-none border-b border-white/10 text-center" min="0"><span class="text-sm sm:text-[9px] opacity-50 flex-shrink-0 font-medium">g</span></div>
-    <div class="col-span-1 flex items-center gap-2 sm:gap-1 min-w-0">
-      <input type="number" value="${time}" step="0.01" placeholder="h.m" min="0"
-             class="part-time w-full bg-transparent text-base sm:text-xs outline-none border-b border-white/10 text-center"><span class="text-sm sm:text-[9px] opacity-50 flex-shrink-0 font-medium">h/m</span>
-    </div>
-    <div class="col-span-1 flex justify-end flex-shrink-0"><button onclick="removePart(${partsCount})" class="text-rose-500 font-bold text-3xl sm:text-xl leading-none">&times;</button></div>`;
+    <div class="col-span-1 flex justify-end"><button onclick="removePart(${partsCount})" class="text-rose-500 font-bold text-xl">&times;</button></div>`;
   container.appendChild(row);
 }
 function removePart(id){
   const row=document.getElementById(`part-${id}`);
-  if (row && document.querySelectorAll('.part-row').length>1){ row.remove(); calculate(false); }
+  if (row && document.querySelectorAll('.part-row').length>1){ row.remove(); calculate(false); renumberPlates(); }
+}
+function renumberPlates() {
+  const rows = document.querySelectorAll('.part-row');
+  rows.forEach((row, idx) => {
+    const num = (idx + 1) < 10 ? `0${idx + 1}` : `${idx + 1}`;
+    row.querySelector('.col-span-1:first-child').textContent = num;
+  });
+  plateCounter = rows.length;
 }
 
 /* -----------------------  SLIDER LABELS  -------------------- */
@@ -71,7 +119,8 @@ function calculate(showAlert=true){
   let totalWeight=0,totalMinutes=0;
   window.currentItemsInfo=[];
   document.querySelectorAll('.part-row').forEach(row=>{
-    const name=row.querySelector('.part-name').value;
+    const num=row.querySelector('.col-span-1:first-child').textContent.trim();
+    const name=`Placa ${num}`;
     const w=parseFloat(row.querySelector('.part-weight').value)||0;
     // parse tiempo h.m -> horas + minutos
     const tStr=row.querySelector('.part-time').value || '';
@@ -118,23 +167,23 @@ function calculate(showAlert=true){
   
   // Mostrar alerta solo si es una llamada del usuario
   if(showAlert) {
-    alert('✅ Cálculo completado exitosamente');
+    alert('Cálculo completado exitosamente');
   }
 }
 
 /* -----------------------  PROGRESS BAR & BREAKDOWN  ---------- */
 function updateVisuals(filament,energy,waste,labor,profit,total){
-  const segF=document.getElementById('segFilament');
-  const segE=document.getElementById('segEnergy');
-  const segW=document.getElementById('segWaste');   // NUEVO
-  const segL=document.getElementById('segLabor');
-  const segP=document.getElementById('segProfit');
-
-  segF.style.width=`${(filament/total*100).toFixed(2)}%`;
-  segE.style.width=`${(energy   /total*100).toFixed(2)}%`;
-  segW.style.width=`${(waste    /total*100).toFixed(2)}%`; // NUEVO
-  segL.style.width=`${(labor    /total*100).toFixed(2)}%`;
-  segP.style.width=`${(profit   /total*100).toFixed(2)}%`;
+  const segs=[
+    {el:document.getElementById('segFilament'), pct:filament/total*100, label:'F'},
+    {el:document.getElementById('segEnergy'),   pct:energy   /total*100, label:'E'},
+    {el:document.getElementById('segWaste'),    pct:waste    /total*100, label:'W'},
+    {el:document.getElementById('segLabor'),    pct:labor    /total*100, label:'S'},
+    {el:document.getElementById('segProfit'),   pct:profit   /total*100, label:'G'},
+  ];
+  segs.forEach(s=>{
+    s.el.style.width=`${s.pct.toFixed(2)}%`;
+    s.el.textContent=s.pct>=3?s.label+' '+s.pct.toFixed(0)+'%':'';
+  });
 
   const listEl=document.getElementById('breakdownList');
   listEl.innerHTML='';
@@ -187,7 +236,7 @@ async function copyMarkdown() {
   /* Copiar al portapapeles */
   try {
     await navigator.clipboard.writeText(md);
-    alert('✅ Markdown copiado al portapapeles');
+    alert('Markdown copiado al portapapeles');
   } catch (_) {
     const txtArea = document.createElement('textarea');
     txtArea.value = md;
@@ -195,7 +244,7 @@ async function copyMarkdown() {
     txtArea.select();
     document.execCommand('copy');
     document.body.removeChild(txtArea);
-    alert('✅ Markdown copiado (fallback) ✔️');
+    alert('Markdown copiado (fallback)');
   }
 }
 
@@ -250,6 +299,7 @@ function clearAll() {
   // Reset all fields and state
   document.getElementById('partsContainer').innerHTML = '';
   partsCount = 0;
+  plateCounter = 0;
   window.currentItemsInfo = [];
   wasteCost = 0;
   
@@ -294,3 +344,200 @@ window.addEventListener('load',()=>{
   // Agregar una fila por defecto al cargar
   addPartRow();
 });
+
+/* -----------------------  PDF EXPORT  --------------------------- */
+async function generatePdf() {
+  if (typeof window.getProjectData !== 'function') return alert('No se pueden cargar datos');
+
+  const data = window.getProjectData();
+  if (!data || !Number(data.finalPrice)) {
+    return alert('Primero calcula los costos antes de exportar el PDF.');
+  }
+
+  try {
+    const getPct = (v) => ((v / data.chart.totalSum) * 100).toFixed(1);
+
+    const bars = [
+      { key: 'filament', label: 'Filamento', color: 'gradient-blue', val: data.chart.filament },
+      { key: 'energy',   label: 'Energía',   color: 'gradient-yellow', val: data.chart.energy },
+      { key: 'waste',    label: 'Desperdicio', color: 'gradient-pink', val: data.chart.waste },
+      { key: 'labor',    label: 'Setup',     color: 'gradient-purple', val: data.chart.labor },
+      { key: 'profit',   label: 'Ganancia',   color: 'gradient-green', val: data.chart.profit },
+    ];
+    const maxVal = Math.max(...bars.map(b => b.val), 1);
+
+    let itemsRows = '';
+    data.items.forEach((item, i) => {
+      itemsRows += `<tr><td class="table-cell">${i + 1}</td><td class="table-cell">${item}</td></tr>`;
+    });
+
+    let chartBars = '';
+    bars.forEach(b => {
+      const pct = getPct(b.val);
+      const h = Math.max((b.val / maxVal) * 100, 4);
+      const showInside = h >= 22;
+      chartBars += `<div class="chart-bar-wrapper">
+        ${!showInside ? `<div class="pct-label">${pct}%</div>` : ''}
+        <div class="bar-container ${b.color}" style="height:${h}px;display:flex;align-items:flex-start;justify-content:center;padding-top:3px;font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.35);">${showInside ? pct + '%' : ''}</div>
+        <div class="bar-name">${b.label}</div>
+      </div>`;
+    });
+
+    const breakdownRows = bars.map(b =>
+      `<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:11px;">
+        <span style="color:#64748b">${b.label}</span>
+        <span style="font-weight:600;color:#334155">${formatCurrency(b.val)}</span>
+      </div>`
+    ).join('');
+
+    const html = `<div id="pdf-container">
+      <div class="pdf-header">
+        <div class="logo-main">Costo 3D Pro</div>
+        <div style="font-size:11px;color:#64748b;text-align:right">
+          <div>${data.projectName}</div>
+          <div>${new Date().toLocaleDateString('es-CO')}</div>
+        </div>
+      </div>
+
+      <div class="meta-grid">
+        <span>🖨️ ${data.printer}</span>
+        <span>⏱️ ${Math.floor(data.totalMinutes / 60)}h ${data.totalMinutes % 60}m</span>
+      </div>
+
+      <div class="section-box" style="padding:20px">
+        <h3 style="font-size:12px;font-weight:600;color:#1e293b;margin:0 0 10px 0;text-transform:uppercase;letter-spacing:0.2em">Piezas</h3>
+        <table class="items-table">
+          <thead><tr><th class="table-header">#</th><th class="table-header">Detalle</th></tr></thead>
+          <tbody>${itemsRows}</tbody>
+        </table>
+      </div>
+
+      <div class="section-box chart-box" style="padding:20px">
+        <h3 style="font-size:12px;font-weight:600;color:#1e293b;margin:0 0 10px 0;text-transform:uppercase;letter-spacing:0.2em">Distribución de Costos</h3>
+        <div class="charts-row-container">${chartBars}</div>
+        <div style="margin-top:20px;border-top:1px solid #f1f5f9;padding-top:12px">${breakdownRows}</div>
+      </div>
+
+      <div class="total-card">
+        <div style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.2em">Precio de Venta Sugerido</div>
+        <div class="amount">${formatCurrency(data.finalPrice)}</div>
+      </div>
+
+      <div style="text-align:center;font-size:9px;color:#94a3b8;margin-top:20px">
+        Generado por Costo 3D Pro
+      </div>
+    </div>`;
+
+    const container = document.createElement('div');
+    container.innerHTML = html;
+    container.style.cssText = 'position:absolute;left:-9999px;top:0;width:850px;background:white;z-index:9999';
+    document.body.appendChild(container);
+
+    const canvas = await html2canvas(container, {
+      scale: 2,
+      useCORS: true,
+      logging: false,
+      width: 850,
+      windowWidth: 850,
+    });
+
+    document.body.removeChild(container);
+
+    const imgData = canvas.toDataURL('image/png');
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    const pdfW = 210;
+    const pdfH = (canvas.height / canvas.width) * pdfW;
+    let offset = 0;
+    const maxH = 297;
+
+    if (pdfH <= maxH) {
+      doc.addImage(imgData, 'PNG', 0, 0, pdfW, pdfH);
+    } else {
+      while (offset < pdfH) {
+        if (offset > 0) doc.addPage();
+        const sliceH = Math.min(pdfH - offset, maxH);
+        const srcY = (offset / pdfH) * canvas.height;
+        const srcH = (sliceH / pdfH) * canvas.height;
+        const tempCanvas = document.createElement('canvas');
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = srcH;
+        const ctx = tempCanvas.getContext('2d');
+        ctx.drawImage(canvas, 0, srcY, canvas.width, srcH, 0, 0, canvas.width, srcH);
+        doc.addImage(tempCanvas.toDataURL('image/png'), 'PNG', 0, 0, pdfW, sliceH);
+        offset += maxH;
+      }
+    }
+
+    const now = new Date();
+    const dd = String(now.getDate()).padStart(2, '0');
+    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    const yyyy = now.getFullYear();
+    const dateStr = `${dd}${mm}${yyyy}`;
+    const projectSlug = (data.projectName || 'cotizacion').replace(/[^a-zA-Z0-9_-]/g, '_');
+    doc.save(`${projectSlug}_${dateStr}.pdf`);
+  } catch (error) {
+    console.error('Error generando PDF:', error);
+    alert('Error al generar el PDF. Revisa la consola para más detalles.');
+  }
+}
+
+/* ----------------------- DATA BRIDGE FOR EXPORT -------------------- */
+window.getProjectData = function() {
+  // Función para obtener los valores actuales sin depender de variables globales
+  const priceSpool   = Number(document.getElementById('priceSpool').value)||0;
+  const watts        = Number(document.getElementById('wattsInput').value)||0;
+  const kwhPrice     = Number(document.getElementById('kwhPrice').value)||0;
+  const laborFixed   = Number(document.getElementById('laborRange').value)||0;
+  const marginPercent= Number(document.getElementById('marginRange').value)||0;
+  const wastePercent = Number(document.getElementById('wasteRange').value)||0;
+
+  let totalWeight=0,totalMinutes=0;
+  window.currentItemsInfo=[];
+  
+  // Recolectar datos de cada fila de pieza
+  document.querySelectorAll('.part-row').forEach(row => {
+    const num = row.querySelector('.col-span-1:first-child').textContent.trim();
+    const name = `Placa ${num}`;
+    const w = parseFloat(row.querySelector('.part-weight').value) || 0;
+    const tStr = row.querySelector('.part-time').value || '';
+    let hrs=0, mins=0;
+    if(tStr.includes('.')){
+      const parts = tStr.split('.');
+      hrs = parseInt(parts[0]) || 0;
+      mins = parseInt((parts[1] || '').slice(0,2)) || 0;
+    } else {
+      hrs = parseInt(tStr) || 0;
+    }
+    totalWeight += w; 
+    totalMinutes += (hrs * 60) + mins;
+    window.currentItemsInfo.push(`${name} (${w}g, ${hrs}h ${mins}m)`);
+  });
+
+  const costFilamentBase = (totalWeight / 1000) * priceSpool;
+  const costWaste = costFilamentBase * (wastePercent / 100);
+  const totalFilamentCost = costFilamentBase + costWaste;
+  const costEnergy = (watts / 1000) * (totalMinutes / 60) * kwhPrice;
+  const productionCostTotal = totalFilamentCost + costEnergy + laborFixed;
+  const profitAmount = productionCostTotal * (marginPercent / 100);
+  const finalPrice = productionCostTotal + profitAmount;
+
+  return {
+    projectName: document.getElementById('projectName').value || 'Sin nombre',
+    printer: document.getElementById('printerModel') ? document.getElementById('printerModel').options[document.getElementById('printerModel').selectedIndex].text : '',
+    totalMinutes,
+    productionCostTotal,
+    profitAmount,
+    finalPrice,
+    marginPercent,
+    items: window.currentItemsInfo, // Ya procesadas para el PDF
+    chart: {
+      filament: totalFilamentCost,
+      energy: costEnergy,
+      waste: costWaste,
+      labor: laborFixed,
+      profit: profitAmount,
+      totalSum: productionCostTotal
+    }
+  };
+};

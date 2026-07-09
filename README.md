@@ -4,40 +4,29 @@
 
 Una herramienta web moderna y potente para calcular de forma precisa los costos de producción de piezas impresas en 3D, considerando múltiples variables como consumo de energía, desperdicio de filamento, costos de setup y márgenes de ganancia.
 
----
-
-## 👀 Vista Previa
-
-![Interfaz de Costo 3D Pro](img/page-costo3d-pro.png)
-
-*Interfaz profesional con cálculo de costos en tiempo real, desglose visual de componentes y generador de cotizaciones en Markdown*
-
----
-
 ## 🚀 Características
 
 ✅ **Cálculo Multi-Piezas** - Agrega múltiples piezas en una sola cotización  
 ✅ **Variables Completas** - Hardware, electricidad, filamento, desperdicio, laborales y márgenes  
-✅ **Desglose Visual** - Barra de progreso interactiva mostrando distribución de costos  
+✅ **Desglose Visual** - Barra de progreso interactiva con porcentajes visibles en cada segmento  
+✅ **Exportación PDF** - Descarga cotización profesional con tabla de piezas, gráfico de costos y precio final  
 ✅ **Generador de Markdown** - Exporta cotizaciones formateadas al portapapeles  
+✅ **Numeración Automática** - Las placas se numeran solas al agregar o quitar piezas  
 ✅ **Soporte Múltiples Impresoras** - Configurable para diferentes modelos y potencias  
-✅ **Interfaz Moderna** - Diseño dark mode profesional con Tailwind CSS  
+✅ **Interfaz Moderna** - Diseño dark mode profesional con Tailwind CSS e íconos SVG  
 ✅ **Responsive** - Funciona perfectamente en desktop, tablet y móvil  
 ✅ **Sin Dependencias Externas** - Vanilla JavaScript puro, cero librerías
 
 ## 📋 Tabla de Contenidos
 
-- [Vista Previa](#-vista-previa)
-- [Características](#-características)
-- [Requisitos](#-requisitos)
-- [Instalación](#-instalación)
-- [Uso Rápido](#-uso-rápido)
-- [Características Principales](#-características-principales)
-- [Estructura del Proyecto](#-estructura-del-proyecto)
-- [Tecnologías](#-tecnologías)
-- [Personalización](#-personalización)
-- [Troubleshooting](#-troubleshooting)
-- [Licencia](#-licencia)
+- [Requisitos](#requisitos)
+- [Instalación](#instalación)
+- [Uso](#uso)
+- [Características Principales](#características-principales)
+- [Estructura del Proyecto](#estructura-del-proyecto)
+- [Tecnologías](#tecnologías)
+- [Guía de Usuario](#guía-de-usuario)
+- [Licencia](#licencia)
 
 ## 🔧 Requisitos
 
@@ -81,86 +70,92 @@ Abre en tu navegador: `http://localhost:8000`
 
 ---
 
-## 💻 Uso Rápido
+## 💻 Uso Básico
 
-### 1️⃣ Configurar Hardware
-- Selecciona tu impresora 3D del dropdown
-- Ajusta potencia (Watts) si es necesario  
-- Establece el precio de energía (COP/kWh)
+### Paso 1: Configurar Hardware
+1. Selecciona tu impresora 3D del dropdown
+2. Ajusta potencia (Watts) si es necesario
+3. Establece el precio de energía (COP/kWh)
 
-### 2️⃣ Ingresar Datos del Proyecto
-- Especifica el nombre del proyecto
-- Define el precio del filamento por kg
-- Ajusta el porcentaje de desperdicio
+### Paso 2: Ingresar Datos del Proyecto
+1. Especifica el nombre del proyecto
+2. Define el precio del filamento por kilogramo
+3. Ajusta el porcentaje de desperdicio (% de filamento usado que se pierde)
 
-### 3️⃣ Agregar Piezas
-Haz clic en "+ Añadir" para cada pieza e ingresa:
-- **Placa**: Identificador de la pieza
-- **Gramos**: Peso de filamento utilizado
-- **Tiempo**: Duración en formato h.m (ej: 2.45 = 2h 45min)
+### Paso 3: Agregar Piezas
+1. Haz clic en "+ Añadir" para cada pieza
+2. Las placas se numeran automáticamente (01, 02, 03...)
+3. Completa:
+   - **Gramos**: Peso de filamento
+   - **Tiempo**: Duración de impresión (formato h.m, ej: 2.45 = 2h 45min)
 
-### 4️⃣ Configurar Ganancia
-Ajusta los sliders para tu estrategia de precios:
-- **Setup**: Costo fijo por trabajo
-- **Margen Ganancia**: Rentabilidad deseada
-- **Desperdicio**: Pérdida de material esperada
+### Paso 4: Configurar Ganancia
+Ajusta los sliders:
+- **Setup (Fijo)**: Costo fijo por trabajo
+- **Margen Ganancia**: Porcentaje de rentabilidad
+- **Desperdicio (Wastage)**: Pérdida de material
 
-### 5️⃣ Calcular y Exportar
-- Haz clic en "✓ Calcular Todo"
-- Visualiza el desglose de costos en tiempo real
-- Copia la cotización en Markdown con "📋 Copiar Markdown"
-- Genera una nueva cotización con "🔄 Nueva Cotización"
+### Paso 5: Calcular
+1. Haz clic en "✓ Calcular Todo"
+2. Verás confirmación del cálculo
+3. Los resultados se mostrarán instantáneamente
+
+### Exportar PDF
+- Haz clic en "Exportar PDF" para descargar un documento profesional
+- Incluye: tabla de piezas, gráfico de distribución de costos y precio final
+- El archivo se nombra automáticamente como `{proyecto}_{ddMMyyyy}.pdf`
+
+### Exportar Markdown
+- Haz clic en "Copiar MD" para copiar la cotización formateada al portapapeles
+- Pégala donde necesites (emails, documentos, etc.)
+
+### Nueva Cotización
+- Haz clic en "Nueva Cotización"
+- Confirma la acción
+- Se copia el markdown de la cotización actual antes de resetear
 
 ## 🎯 Características Principales
 
 ### Cálculo Detallado de Costos
+- **Filamento**: Costo base × peso ÷ 1000
+- **Desperdicio**: Filamento × porcentaje de desperdicio
+- **Energía**: (Watts ÷ 1000) × (Minutos ÷ 60) × Precio/kWh
+- **Setup**: Costo fijo configurável
+- **Ganancia**: (Total Costos) × Margen %
+- **Precio Final**: Total Costos + Ganancia
 
-El motor de cálculo considera 5 componentes principales:
+### Desglose Visual
+- Barra de progreso interactiva con porcentajes visibles dentro de cada segmento:
+  - 🔵 Filamento: Azul
+  - 🟡 Energía: Amarillo quemado
+  - 🟩 Ganancia: Verde
+  - 🟪 Setup: Púrpura
+  - 🟥 Desperdicio: Rosa
 
-| Componente | Fórmula | Descripción |
-|-----------|---------|-------------|
-| **Filamento** | `Peso (g) × Precio/kg ÷ 1000` | Costo base del material |
-| **Desperdicio** | `Filamento × % Desperdicio` | Pérdida esperada durante impresión |
-| **Energía** | `(Watts ÷ 1000) × (min ÷ 60) × $/kWh` | Consumo eléctrico de la máquina |
-| **Setup** | `Valor Fijo Configurado` | Costo de preparación del trabajo |
-| **Ganancia** | `Total Costos × Margen %` | Rentabilidad del proyecto |
+### Exportación PDF
+- Renderiza la cotización con html2canvas + jsPDF en formato A4
+- Incluye: tabla de piezas, gráfico de barras con distribución de costos y precio final
+- Soporte multi-página si el contenido excede una hoja
+- Nombre de archivo: `{proyecto}_{ddMMyyyy}.pdf`
 
-### Interfaz Visual Intuitiva
-
-- **Desglose de Costos en Tiempo Real**: Barra de progreso con código de colores mostrando el peso de cada componente
-- **Cálculo Multi-Piezas**: Agrega ilimitadas piezas y ve el resumen total automáticamente
-- **Visualización del Precio Sugerido**: Calcula automáticamente el precio de venta recomendado
-- **Tabla de Piezas Interactiva**: Gestiona fácilmente todas tus piezas con suma total de tiempo
-
-### Exportación de Cotizaciones
-
-Genera reportes en Markdown con:
-- ✅ Fecha y hora del cálculo
-- ✅ Modelo de impresora utilizado
-- ✅ Nombre del proyecto
-- ✅ Listado detallado de piezas
-- ✅ Resumen de costos por componente
-- ✅ Precio total sugerido de venta
-- ✅ Márgenes de ganancia aplicados
-
-**Úsalo para**: Emails de cotización, propuestas, facturación, registro de proyectos
-
-### Configuración Flexible
-
-- **Múltiples Impresoras**: Preconfiguradas (Bambulab A1, P2S) con opción de valores personalizados
-- **Precio de Energía Variable**: Adapta el COP/kWh a tu región
-- **Márgenes Dinámicos**: Ajusta setup, ganancia y desperdicio por proyecto
-- **Interfaz Responsive**: Funciona en desktop, tablet y dispositivos móviles
+### Exportación de Markdown
+Genera automáticamente reportes con:
+- Fecha actual
+- Modelo de impresora
+- Nombre del proyecto
+- Detalle de piezas
+- Resumen económico completo
+- Precio total sugerido
 
 ## 📁 Estructura del Proyecto
 
 ```
 costo3d-pro/
-├── index.html          # Estructura HTML principal
+├── index.html          # Estructura HTML principal (Tailwind, jsPDF, html2canvas vía CDN)
 ├── css/
 │   └── styles.css      # Estilos personalizados
 ├── js/
-│   └── main.js         # Lógica JavaScript
+│   └── main.js         # Toda la lógica: cálculo, state, markdown, PDF
 ├── favicon.svg         # Icono de la aplicación
 └── README.md           # Este archivo
 ```
@@ -170,30 +165,49 @@ costo3d-pro/
 - **HTML5** - Estructura semántica
 - **CSS3** - Estilos y animaciones
 - **JavaScript (Vanilla)** - Lógica y cálculos
-- **Tailwind CSS** - Framework de utilidades
+- **Tailwind CSS** - Framework de utilidades (CDN)
+- **jsPDF + html2canvas** - Generación de PDF (CDN)
 - **Google Fonts** - Tipografía Inter
+
+## 📖 Guía de Usuario
+
+### Atajos Útiles
+| Acción | Resultado |
+|--------|-----------|
+| Cambiar impresora | Actualiza watios automáticamente |
+| Mover sliders | Recalcula instantáneamente |
+| Agregar/Eliminar piezas | Actualiza totales y renumera placas |
+| Exportar PDF | Descarga cotización profesional |
+| Copiar Markdown | Copia cotización formateada |
+| Nueva Cotización | Resetea todo a valores iniciales |
+
+### Consejos
+- El sistema recalcula automáticamente con cada cambio
+- Los valores se expresan en COP (Pesos Colombianos)
+- El tiempo se ingresa en formato decimal: horas.minutos (2.30 = 2h 30min)
+- Las placas se numeran automáticamente; al eliminar una se reordenan
+- El setup es un costo fijo por trabajo, no por pieza
+
+### Impresoras Preconfiguradas
+- **Bambulab A1** (95W)
+- **Bambulab P2S** (180W)
+
+Puedes modificar los watts manualmente para otras impresoras.
 
 ## 🎨 Personalización
 
 ### Cambiar Valores por Defecto
-
-Edita `js/main.js` para ajustar los valores iniciales:
-
-```javascript
-// Configuración de Hardware
-<input type="number" id="wattsInput" value="95">      // Potencia (Watts)
-<input type="number" id="kwhPrice" value="864">      // Precio (COP/kWh)
-
-// Configuración de Proyecto
-<input type="number" id="priceSpool" value="85000">  // Precio filamento/kg
-
-// Configuración de Ganancia
-<input type="range" id="laborRange" value="12000">   // Setup (COP)
-<input type="range" id="marginRange" value="30">     // Margen (%)
+Edita el atributo `value` en los inputs de `index.html`:
+```html
+<input type="number" id="wattsInput" value="95">        // Watts
+<input type="number" id="kwhPrice" value="864">         // COP/kWh
+<input type="number" id="priceSpool" value="85000">     // Precio filamento/kg
+<input type="range" id="laborRange" value="12000">      // Setup
+<input type="range" id="marginRange" value="30">        // Margen %
+<input type="range" id="wasteRange" value="10">         // Desperdicio %
 ```
 
 ### Agregar Nuevas Impresoras
-
 En `index.html`, dentro del `<select id="printerModel">`:
 ```html
 <option value="150">Mi Impresora (150W)</option>
@@ -201,22 +215,27 @@ En `index.html`, dentro del `<select id="printerModel">`:
 
 ## 🐛 Troubleshooting
 
-| Problema | Solución |
-|----------|----------|
-| **Los precios no se actualizan** | Verifica que todos los campos estén completos y haz clic en "Calcular Todo" |
-| **El Markdown no se copia** | Intenta nuevamente o verifica los permisos del navegador para clipboard |
-| **Los sliders no responden** | Recarga la página o limpia el caché del navegador |
-| **Impresora no aparece** | Agrega manualmente en `index.html` o usa valores custom en Watts |
-| **Los valores se pierden al recargar** | Comportamiento normal - no hay persistencia en localStorage |
+**P: Los precios no se actualizan**
+- R: Verifica que completaste todos los campos
+- R: Haz clic en "Calcular Todo"
 
-### Navegadores Soportados
+**P: El Markdown no se copia**
+- R: Intenta hacer clic nuevamente en "Copiar Markdown"
+- R: Verifica permisos del navegador para clipboard
 
-✅ Chrome 90+  
-✅ Firefox 88+  
-✅ Safari 14+  
-✅ Edge 90+
+**P: Los valores persisten al recargar**
+- R: Es comportamiento normal - no hay persistencia en localStorage
 
----
+**P: El PDF no se descarga**
+- R: Asegúrate de haber hecho clic en "Calcular Todo" primero
+- R: Verifica que tu navegador permite descargas de archivos
+
+## 📞 Soporte
+
+Para reportar bugs o sugerir mejoras, por favor documenta:
+- Navegador y versión
+- Pasos para reproducir
+- Resultado esperado vs actual
 
 ## 📄 Licencia
 
@@ -224,23 +243,6 @@ Este proyecto está disponible de forma libre para uso personal y comercial.
 
 ---
 
-## 🤝 Contribuciones
-
-¿Encontraste un bug o tienes una idea de mejora? Las contribuciones son bienvenidas.
-
-Por favor documenta:
-- 🐛 Navegador y versión
-- 📝 Pasos para reproducir el problema
-- ✅ Resultado esperado vs resultado actual
-
----
-
-<div align="center">
-
 **Desarrollado con ❤️ para profesionales de impresión 3D**
 
-*Simplifica tus cálculos de costos. Aumenta tu rentabilidad.*
-
-v1.0.0 — 2026
-
-</div>
+v1.0.0 - 2026
