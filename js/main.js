@@ -131,7 +131,7 @@ function calculate(showAlert=true){
     const name=`Placa ${num}`;
     const w=parseFloat(row.querySelector('.part-weight').value)||0;
     // parse tiempo h.m -> horas + minutos
-    const tStr=row.querySelector('.part-time').value || '';
+    const tStr=(row.querySelector('.part-time').value || '').replace(',', '.');
     let hrs=0, mins=0;
     if(tStr.includes('.')){
       const parts=tStr.split('.');
@@ -505,7 +505,7 @@ window.getProjectData = function() {
     const num = row.querySelector('.col-span-1:first-child').textContent.trim();
     const name = `Placa ${num}`;
     const w = parseFloat(row.querySelector('.part-weight').value) || 0;
-    const tStr = row.querySelector('.part-time').value || '';
+    const tStr = (row.querySelector('.part-time').value || '').replace(',', '.');
     let hrs=0, mins=0;
     if(tStr.includes('.')){
       const parts = tStr.split('.');
