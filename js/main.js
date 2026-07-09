@@ -76,9 +76,9 @@ function addPartRow(weight="", time="") {
   const num=plateCounter<10?`0${plateCounter}`:`${plateCounter}`;
   row.innerHTML=`
     <div class="col-span-1 text-xs font-bold text-[#00ff41] text-center py-1">${num}</div>
-    <div class="col-span-1 flex items-center gap-1"><input type="number" value="${weight}" class="part-weight w-full bg-transparent text-xs outline-none border-b border-white/10 text-center"><span class="text-[9px] opacity-50">g</span></div>
+    <div class="col-span-1 flex items-center gap-1"><input type="number" value="${weight}" inputmode="numeric" class="part-weight w-full bg-transparent text-xs outline-none border-b border-white/10 text-center"><span class="text-[9px] opacity-50">g</span></div>
     <div class="col-span-1 flex items-center gap-1">
-      <input type="number" value="${time}" step="0.01" placeholder="h.m"
+      <input type="number" value="${time}" step="0.01" inputmode="decimal" placeholder="h.m"
              class="part-time w-full bg-transparent text-xs outline-none border-b border-white/10 text-center"><span class="text-[9px] opacity-50">h/m</span>
     </div>
     <div class="col-span-1 flex justify-end"><button onclick="removePart(${partsCount})" class="text-[#00ff41] font-bold text-xl">&times;</button></div>`;
