@@ -23,15 +23,15 @@
   <!-- Header -->
   <header class="mb-8 flex flex-col md:flex-row justify-between items-start md:items-end gap-3 border-b border-white/5 pb-4">
     <div>
-      <h1 class="text-2xl md:text-3xl font-extrabold text-white tracking-tighter">Costo <span class="text-blue-500">3D</span> Pro</h1>
-      <p class="text-[10px] uppercase tracking-[0.2em] opacity-50">Multi‑Item Production Engine</p>
+      <h1 class="text-2xl md:text-3xl font-extrabold text-white tracking-tighter">Costo <span class="text-[#00ff41]" style="text-shadow:0 0 20px rgba(0,255,65,0.5)">3D</span> Pro</h1>
+      <p class="text-xs md:text-[10px] uppercase tracking-[0.2em] opacity-50">Multi‑Item Production Engine</p>
     </div>
     <div class="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
-      <button onclick="generatePdf()" class="bg-slate-700 hover:bg-red-600 text-white text-[10px] font-bold py-2 px-4 rounded-full transition-all uppercase tracking-wider inline-flex items-center justify-center gap-1.5">
+      <button onclick="generatePdf()" class="text-xs md:text-[10px] font-bold py-2 px-4 rounded-none transition-all duration-300 uppercase tracking-wider inline-flex items-center justify-center gap-1.5 border border-[#00ff41] text-[#00ff41] hover:bg-[#00ff41] hover:text-black hover:shadow-[0_0_20px_rgba(0,255,65,0.4)]">
         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
         Exportar PDF
       </button>
-      <button onclick="copyMarkdown()" class="bg-slate-700 hover:bg-blue-600 text-white text-[10px] font-bold py-2 px-4 rounded-full transition-all uppercase tracking-wider inline-flex items-center justify-center gap-1.5">
+      <button onclick="copyMarkdown()" class="text-xs md:text-[10px] font-bold py-2 px-4 rounded-none transition-all duration-300 uppercase tracking-wider inline-flex items-center justify-center gap-1.5 border border-[#00ff41] text-[#00ff41] hover:bg-[#00ff41] hover:text-black hover:shadow-[0_0_20px_rgba(0,255,65,0.4)]">
         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
         Copiar Markdown
       </button>
@@ -45,72 +45,72 @@
 
       <!-- Hardware & Electricidad -->
       <div class="mac-card p-5 shadow-xl text-sm">
-        <div class="flex items-center mb-3 text-slate-400"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><h2 class="font-semibold uppercase tracking-wider text-xs">Hardware & Electricidad</h2></div>
+        <div class="flex items-center mb-3 text-[#00ff41]"><svg class="w-4 h-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><h2 class="font-semibold uppercase tracking-wider text-xs">Hardware & Electricidad</h2></div>
         <div class="space-y-3">
-          <select id="printerModel" onchange="syncWatts()" class="w-full bg-white/5 border border-white/10 rounded-xl p-2.5 text-white outline-none cursor-pointer">
-            <option value="95">Bambulab A1 (95W)</option>
-            <option value="180">Bambulab P2S (180W)</option>
+          <select id="printerModel" onchange="syncWatts()" class="w-full bg-black/60 border border-[#00ff41]/20 rounded-none p-2.5 text-white outline-none cursor-pointer focus:border-[#00ff41] focus:shadow-[0_0_12px_rgba(0,255,65,0.15)] transition-all duration-300">
+            <option value="95" class="bg-black text-white">Bambulab A1 (95W)</option>
+            <option value="180" class="bg-black text-white">Bambulab P2S (180W)</option>
           </select>
-          <div class="grid grid-cols-3 gap-1.5 md:gap-2 text-[9px] md:text-[10px]">
-            <div><label class="block opacity-40 mb-1 uppercase ml-1">Watts</label>
-              <input type="number" id="wattsInput" value="95" class="w-full input-field rounded-lg p-2 outline-none text-center font-bold text-white"></div>
-            <div><label class="block opacity-40 mb-1 uppercase ml-1">COP/KWH</label>
-              <input type="number" id="kwhPrice" value="864" class="w-full input-field rounded-lg p-2 outline-none text-center font-bold text-white"></div> <!-- 864 por defecto -->
-            <div><label class="block opacity-40 mb-1 uppercase ml-1">Min (Op)</label>
-              <input type="number" id="globalMin" value="0" max="59" class="w-full input-field rounded-lg p-2 outline-none text-center font-bold text-white"></div>
+          <div class="grid grid-cols-3 gap-1.5 md:gap-2 text-xs md:text-[10px]">
+            <div><label class="block text-[#00ff41]/70 mb-1 uppercase ml-1">Watts</label>
+              <input type="number" id="wattsInput" value="95" class="w-full input-field rounded-none p-2 outline-none text-center font-bold text-white"></div>
+            <div><label class="block text-[#00ff41]/70 mb-1 uppercase ml-1">COP/KWH</label>
+              <input type="number" id="kwhPrice" value="864" class="w-full input-field rounded-none p-2 outline-none text-center font-bold text-white"></div>
+            <div><label class="block text-[#00ff41]/70 mb-1 uppercase ml-1">Min (Op)</label>
+              <input type="number" id="globalMin" value="0" max="59" class="w-full input-field rounded-none p-2 outline-none text-center font-bold text-white"></div>
           </div>
         </div>
       </div>
 
       <!-- Filamento & Piezas -->
-      <div class="mac-card p-5 shadow-xl border-l-4 border-blue-500/30">
-        <div class="flex items-center justify-between mb-3 text-slate-400"><h2 class="text-sm font-semibold uppercase tracking-wider text-xs">Proyecto & Piezas</h2>
-          <button onclick="addPartRow()" class="text-[10px] bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded-full font-bold transition-all">+ Añadir</button></div>
+      <div class="mac-card p-5 shadow-xl border-l-4 border-[#00ff41]/30">
+        <div class="mb-3 text-[#00ff41]"><h2 class="font-semibold uppercase tracking-wider text-xs">Proyecto & Piezas</h2></div>
 
         <!-- Campo de nombre del proyecto -->
         <div class="mb-4 pb-3 border-b border-white/5">
-          <label class="block text-[10px] opacity-50 mb-1 uppercase ml-1">Nombre del Proyecto</label>
-          <input type="text" id="projectName" placeholder="Ej: Dragon articulado" class="w-full input-field rounded-xl p-2.5 text-white outline-none text-sm font-bold"></div>
+          <label class="block text-xs md:text-[10px] opacity-50 mb-1 uppercase ml-1">Nombre del Proyecto</label>
+          <input type="text" id="projectName" placeholder="Ej: Dragon articulado" class="w-full input-field rounded-none p-2.5 text-white outline-none text-sm font-bold"></div>
 
         <!-- Bloque de precio del filamento -->
         <div class="grid grid-cols-2 gap-4 mb-4 pb-3 border-b border-white/5">
-          <div class="col-span-2"><label class="block text-[10px] opacity-50 mb-1 uppercase ml-1">Precio/KG (COP)</label>
-            <input type="number" id="priceSpool" value="85000" class="w-full input-field rounded-xl p-2.5 text-white outline-none text-sm font-bold"></div>
+          <div class="col-span-2"><label class="block text-xs md:text-[10px] opacity-50 mb-1 uppercase ml-1">Precio/KG (COP)</label>
+            <input type="number" id="priceSpool" value="85000" class="w-full input-field rounded-none p-2.5 text-white outline-none text-sm font-bold"></div>
         </div>
 
-        <!-- Encabezado de la tabla (moved below el bloque de precio) -->
+        <!-- Encabezado de la tabla -->
         <div class="grid grid-cols-4 gap-2 text-xs font-medium uppercase tracking-wide mb-2">
           <div class="text-slate-400">Placa</div>
           <div class="text-slate-400">Gramos</div>
           <div class="text-slate-400">Tiempo</div>
-          <div></div> <!-- columna de acción -->
+          <div></div>
         </div>
 
         <div id="partsContainer" class="space-y-3 max-h-[300px] overflow-y-auto pr-1 custom-scrollbar"></div>
+        <button onclick="addPartRow()" class="mt-3 w-full text-xs md:text-[10px] font-bold px-3 py-2 rounded-none transition-all duration-300 border border-[#00ff41] text-[#00ff41] hover:bg-[#00ff41] hover:text-black hover:shadow-[0_0_20px_rgba(0,255,65,0.4)]">+ Añadir Placa</button>
       </div>
 
       <!-- Ganancia -->
-      <div class="mac-card p-5 shadow-xl border-l-4 border-emerald-500/30 text-sm">
-        <h2 class="text-sm font-semibold uppercase tracking-wider text-emerald-400 mb-4 italic text-xs">Configuración de Ganancia</h2>
+      <div class="mac-card p-5 shadow-xl border-l-4 border-[#00ff41]/30 text-sm">
+        <h2 class="font-semibold uppercase tracking-wider text-[#00ff41] mb-4 text-xs">Configuración de Ganancia</h2>
         <div class="space-y-4">
 
           <!-- Setup -->
           <div>
-            <div class="flex justify-between"><label class="text-[10px] uppercase font-bold text-emerald-400">Setup (Fijo)</label><span id="valLabor" class="text-xs">$ 12.000</span></div> <!-- 12 000 por defecto -->
+            <div class="flex justify-between"><label class="text-xs md:text-[10px] uppercase font-bold text-[#00ff41]">Setup (Fijo)</label><span id="valLabor" class="text-xs">$ 12.000</span></div>
             <input type="range" id="laborRange" min="0" max="100000" step="1000" value="12000"
-                   oninput="updateSliderLabel('valLabor', this.value, true)" class="w-full accent-emerald-500">
+                   oninput="updateSliderLabel('valLabor', this.value, true)" class="w-full accent-[#00ff41]">
           </div>
 
           <!-- Margen -->
           <div>
-            <div class="flex justify-between"><label class="text-[10px] uppercase font-bold text-emerald-400">Margen Ganancia</label><span id="valMargin" class="text-xs">30%</span></div>
+            <div class="flex justify-between"><label class="text-xs md:text-[10px] uppercase font-bold text-[#00ff41]">Margen Ganancia</label><span id="valMargin" class="text-xs">30%</span></div>
             <input type="range" id="marginRange" min="0" max="500" step="1" value="30"
-                   oninput="updateSliderLabel('valMargin', this.value, false)" class="w-full accent-emerald-500">
+                   oninput="updateSliderLabel('valMargin', this.value, false)" class="w-full accent-[#00ff41]">
           </div>
 
           <!-- Desperdicio -->
           <div>
-            <div class="flex justify-between"><label class="text-[10px] uppercase font-bold text-rose-400">Desperdicio (Wastage)</label><span id="valWaste" class="text-xs">10%</span></div>
+            <div class="flex justify-between"><label class="text-xs md:text-[10px] uppercase font-bold text-rose-400">Desperdicio (Wastage)</label><span id="valWaste" class="text-xs">10%</span></div>
             <input type="range" id="wasteRange" min="0" max="50" step="1" value="10"
                    oninput="updateSliderLabel('valWaste', this.value, false)" class="w-full accent-rose-500">
           </div>
@@ -120,12 +120,12 @@
 
       <!-- Botón Calcular y Nueva Cotización -->
       <div class="flex flex-col sm:flex-row justify-between space-y-2 sm:space-y-0 mt-6 gap-3">
-        <button onclick="confirmClearAll()" class="w-full sm:w-auto mac-card px-6 py-3 border-l-4 border-rose-500/50 hover:border-rose-500 text-white font-medium rounded-xl transition-all duration-300 uppercase tracking-wider text-sm hover:bg-white/10 inline-flex items-center justify-center gap-2">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+        <button onclick="confirmClearAll()" class="w-full sm:w-auto px-6 py-3 font-bold rounded-none transition-all duration-300 uppercase tracking-wider text-sm inline-flex items-center justify-center gap-2 border border-rose-500 text-rose-500 hover:bg-rose-500 hover:text-black hover:shadow-[0_0_20px_rgba(244,63,94,0.4)]">
+          <svg class="w-4 h-4 text-[#00ff41]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
           Nueva Cotización
         </button>
 
-        <button onclick="calculate()" class="w-full sm:w-auto mac-card px-6 py-3 border-l-4 border-emerald-500/50 hover:border-emerald-500 text-white font-bold rounded-xl transition-all duration-300 uppercase tracking-widest text-sm hover:bg-white/10">
+        <button onclick="calculate()" class="w-full sm:w-auto px-6 py-3 font-bold rounded-none transition-all duration-300 uppercase tracking-widest text-sm inline-flex items-center justify-center gap-2 border border-[#00ff41] text-[#00ff41] hover:bg-[#00ff41] hover:text-black hover:shadow-[0_0_25px_rgba(0,255,65,0.5)]">
           ✓ Calcular Todo
         </button>
       </div>
@@ -136,34 +136,34 @@
 
       <!-- Precio de Venta / Costo -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="bg-gradient-to-br from-blue-600 to-indigo-700 p-4 md:p-8 rounded-[30px] shadow-2xl text-white relative overflow-hidden group transition-transform hover:scale-[1.01]">
-          <h2 class="text-xs font-bold uppercase tracking-[0.2em] opacity-70 mb-4 text-center">Precio de Venta Sugerido</h2>
-          <div id="finalPrice" class="text-5xl font-black text-center">$ 0</div>
+        <div class="bg-gradient-to-br from-[#0a0a0a] to-[#001a00] p-4 md:p-8 rounded-none shadow-2xl text-white relative overflow-hidden group transition-transform hover:scale-[1.01] border border-[#00ff41]/20">
+          <h2 class="text-xs font-bold uppercase tracking-[0.2em] text-[#00ff41]/70 mb-4 text-center">Precio de Venta Sugerido</h2>
+          <div id="finalPrice" class="text-5xl font-black text-center" style="text-shadow:0 0 30px rgba(0,255,65,0.3)">$ 0</div>
         </div>
 
-        <div class="bg-slate-800/50 border border-white/10 p-4 md:p-8 rounded-[30px] shadow-xl">
-          <h2 class="text-xs font-bold uppercase tracking-[0.2em] opacity-70 mb-4 text-center">Costo de Producción</h2>
+        <div class="bg-[#050505] border border-white/5 p-4 md:p-8 rounded-none shadow-xl">
+          <h2 class="text-xs font-bold uppercase tracking-[0.2em] text-slate-400 mb-4 text-center">Costo de Producción</h2>
           <div id="realCostTotal" class="text-4xl font-mono text-white text-center">$ 0</div>
         </div>
       </div>
 
       <!-- Distribución -->
-      <div class="mac-card p-8 shadow-2xl">
+      <div class="mac-card p-4 md:p-8 shadow-2xl">
         <h3 class="text-white text-xs font-semibold mb-6 uppercase tracking-[0.2em] text-center opacity-60">Desglose de Costos</h3>
         <div id="macProgressContainer" class="mb-6">
-          <div id="segFilament"   class="progress-segment bg-blue-500" style="width:0%"></div>
-          <div id="segEnergy"     class="progress-segment bg-yellow-500" style="width:0%"></div>
-          <div id="segWaste"      class="progress-segment bg-pink-600" style="width:0%"></div> <!-- NUEVO -->
-          <div id="segLabor"      class="progress-segment bg-purple-500" style="width:0%"></div>
-          <div id="segProfit"     class="progress-segment bg-green-500" style="width:0%"></div>
+          <div id="segFilament"   class="progress-segment bg-green-900" style="width:0%"></div>
+          <div id="segEnergy"     class="progress-segment bg-green-700" style="width:0%"></div>
+          <div id="segWaste"      class="progress-segment bg-green-500" style="width:0%"></div>
+          <div id="segLabor"      class="progress-segment bg-green-400" style="width:0%"></div>
+          <div id="segProfit"     class="progress-segment bg-green-300" style="width:0%"></div>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-[11px] font-bold uppercase">
-          <div class="flex items-center"><span class="w-2.5 h-2.5 bg-blue-500 rounded-full mr-2"></span> Filamento</div>
-          <div class="flex items-center"><span class="w-2.5 h-2.5 bg-yellow-500 rounded-full mr-2"></span> Energía</div>
-          <div class="flex items-center"><span class="w-2.5 h-2.5 bg-pink-600 rounded-full mr-2"></span> Desperdicio</div> <!-- NUEVO -->
-          <div class="flex items-center"><span class="w-2.5 h-2.5 bg-purple-500 rounded-full mr-2"></span> Setup</div>
-          <div class="flex items-center"><span class="w-2.5 h-2.5 bg-green-500 rounded-full mr-2"></span> Ganancia</div>
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs md:text-[11px] font-bold uppercase">
+          <div class="flex items-center"><span class="w-2.5 h-2.5 bg-green-900 rounded-none mr-2"></span> Filamento</div>
+          <div class="flex items-center"><span class="w-2.5 h-2.5 bg-green-700 rounded-none mr-2"></span> Energía</div>
+          <div class="flex items-center"><span class="w-2.5 h-2.5 bg-green-500 rounded-none mr-2"></span> Desperdicio</div>
+          <div class="flex items-center"><span class="w-2.5 h-2.5 bg-green-400 rounded-none mr-2"></span> Setup</div>
+          <div class="flex items-center"><span class="w-2.5 h-2.5 bg-green-300 rounded-none mr-2"></span> Ganancia</div>
         </div>
 
         <div class="mt-8 space-y-3" id="breakdownList"></div>

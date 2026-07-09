@@ -1,19 +1,35 @@
-body{font-family:'Inter',sans-serif;background:#0a0f1e;}
+:root{--neon-green:#00ff41;--neon-dim:rgba(0,255,65,0.1);--neon-glow:0 0 20px rgba(0,255,65,0.3);}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#000;
+  background-image:linear-gradient(rgba(0,255,65,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,65,0.03) 1px,transparent 1px);
+  background-size:40px 40px;
+}
 .mac-card{
-  background:rgba(31,41,55,.7);
-  backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:20px;
+  background:#0a0a0a;
+  border:1px solid var(--neon-dim);
+  border-radius:0;
+  box-shadow:0 4px 30px rgba(0,0,0,0.6),0 0 15px rgba(0,255,65,0.03);
 }
 .input-field{
-  background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.1);
+  background:rgba(0,0,0,0.5);
+  border:1px solid rgba(255,255,255,0.06);
   transition:all .3s ease;
 }
-.input-field:focus{background:rgba(0,0,0,.5);border-color:#3b82f6;outline:none;}
-#macProgressContainer{
-  height:24px;width:100%;background:rgba(255,255,255,.1);
-  border-radius:10px;display:flex;overflow:hidden;
+.input-field:focus{
+  background:#000;
+  border-color:var(--neon-green);
+  box-shadow:0 0 12px rgba(0,255,65,0.15);
+  outline:none;
 }
+#macProgressContainer{
+  height:24px;width:100%;
+  background:rgba(0,255,65,0.04);
+  border:1px solid rgba(0,255,65,0.08);
+  border-radius:0;display:flex;overflow:hidden;
+}
+input:focus, select:focus, button:focus, textarea:focus{outline:1px solid var(--neon-green);outline-offset:1px;}
 .progress-segment{
   height:100%;transition:width .8s cubic-bezier(.34,1.56,.64,1);
   display:flex;align-items:center;justify-content:center;

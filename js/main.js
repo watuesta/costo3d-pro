@@ -30,25 +30,24 @@ function getFormattedDate() {
 const pdfStyles = `
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
   #pdf-container { font-family: 'Inter', sans-serif; color: #1e293b; background: white; width: 850px; padding: 50px; box-sizing: border-box; }
-  .pdf-header { border-bottom: 3px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center; padding:15px 0; }
-  .logo-main { font-size:24px; font-weight:900; color:#1e3a8a; line-height:1.2; }
-  .meta-grid { display:flex; justify-content:center; gap:35%; margin-top:15px; background:#f8fafc; padding:10px 40px; border-radius:6px; font-size:12px; color:#475569; }
-  .section-box { margin-bottom:30px; border:1px solid #f1f5f9; border-radius:8px; background:white; box-shadow:0 2px 4px rgba(0,0,0,0.03); }
+  .pdf-header { border-bottom: 3px solid rgba(0,255,65,0.3); display:flex; justify-content:space-between; align-items:center; padding:15px 0; }
+  .pdf-logo { font-size:24px; font-weight:900; line-height:1.2; }
+  .meta-grid { display:flex; justify-content:center; gap:35%; margin-top:15px; background:#f8fafc; padding:10px 40px; border-radius:0; font-size:12px; color:#475569; border:1px solid rgba(0,255,65,0.15); }
+  .section-box { margin-bottom:30px; border:1px solid rgba(0,255,65,0.12); border-radius:0; background:white; box-shadow:0 2px 4px rgba(0,0,0,0.03); }
   table.items-table { width:100%; font-size:12px; text-align:left; border-collapse: collapse; }
-  th.table-header { padding:8px 12px; background:#f8fafc; color:#64748b; border-bottom:2px solid #e2e8f0; font-weight:600; letter-spacing:0.3em; text-transform:uppercase; font-size:10px; }
+  th.table-header { padding:8px 12px; background:rgba(0,255,65,0.04); color:#16a34a; border-bottom:2px solid rgba(0,255,65,0.2); font-weight:600; letter-spacing:0.3em; text-transform:uppercase; font-size:10px; }
   td.table-cell { padding:8px 12px; border-bottom:1px solid #f1f5f9; color:#334155; }
   .chart-box { padding-top:25px; }
-  .charts-row-container { display:flex; justify-content:center; gap:30px; height:180px; padding-top:40px; border-radius:6px; background:#f8fafc; position:relative; }
+  .charts-row-container { display:flex; justify-content:center; gap:30px; height:240px; padding-top:20px; border-radius:0; background:#f8fafc; border:1px solid rgba(0,255,65,0.08); position:relative; }
   .chart-bar-wrapper { display:flex; flex-direction:column; justify-content:flex-end; height:100%; align-items:center; }
-  .bar-container { width:28px; border-radius:6px 4px 4px 6px; }
-  .pct-label { font-size:10px; color:#334155; font-weight:bold; text-align:center; margin-top:4px; }
-  .bar-name { font-size:8.7px; color:#64748b; text-transform:uppercase; letter-spacing:0.2em; margin-top:2px; }
-  .gradient-blue { background: linear-gradient(#3b82f6, #93c5fd); }
-  .gradient-yellow { background: linear-gradient(#f59e0b, #fde047); }
-  .gradient-pink { background: linear-gradient(#ec4899, #fb7185); }
-  .gradient-purple { background: linear-gradient(#a855f7, #d8b4fe); }
-  .gradient-green { background: linear-gradient(#22c55e, #86efac); }
-  .total-card { margin-top:30px; background:#fffbeb; color:#d97706; text-align:center; padding:25px; border-radius:12px; }
+  .bar-container { width:32px; border-radius:0; }
+  .bar-name { font-size:9px; color:#16a34a; text-transform:uppercase; letter-spacing:0.2em; margin-top:4px; }
+  .gradient-dark { background: linear-gradient(#052e16, #14532d); }
+  .gradient-mid { background: linear-gradient(#14532d, #166534); }
+  .gradient-green { background: linear-gradient(#15803d, #22c55e); }
+  .gradient-light { background: linear-gradient(#22c55e, #4ade80); }
+  .gradient-bright { background: linear-gradient(#4ade80, #86efac); }
+  .total-card { margin-top:30px; background:rgba(0,255,65,0.04); border:1px solid rgba(0,255,65,0.2); color:#16a34a; text-align:center; padding:25px; border-radius:0; }
   .total-card .amount { font-size:36px; font-weight:900; }
 `;
 if (!document.getElementById('pdf-styles')) {
@@ -72,18 +71,21 @@ function addPartRow(weight="", time="") {
   plateCounter++;
   const container = document.getElementById('partsContainer');
   const row=document.createElement('div');
-  row.className='part-row grid grid-cols-4 gap-2 items-center bg-white/5 p-2 rounded-xl border border-white/5';
+  row.className='part-row grid grid-cols-4 gap-2 items-center bg-white/5 p-2 rounded-none border border-white/5';
   row.id=`part-${partsCount}`;
   const num=plateCounter<10?`0${plateCounter}`:`${plateCounter}`;
   row.innerHTML=`
-    <div class="col-span-1 text-xs font-bold text-blue-400 text-center py-1">${num}</div>
+    <div class="col-span-1 text-xs font-bold text-[#00ff41] text-center py-1">${num}</div>
     <div class="col-span-1 flex items-center gap-1"><input type="number" value="${weight}" class="part-weight w-full bg-transparent text-xs outline-none border-b border-white/10 text-center"><span class="text-[9px] opacity-50">g</span></div>
     <div class="col-span-1 flex items-center gap-1">
       <input type="number" value="${time}" step="0.01" placeholder="h.m"
              class="part-time w-full bg-transparent text-xs outline-none border-b border-white/10 text-center"><span class="text-[9px] opacity-50">h/m</span>
     </div>
-    <div class="col-span-1 flex justify-end"><button onclick="removePart(${partsCount})" class="text-rose-500 font-bold text-xl">&times;</button></div>`;
+    <div class="col-span-1 flex justify-end"><button onclick="removePart(${partsCount})" class="text-[#00ff41] font-bold text-xl">&times;</button></div>`;
   container.appendChild(row);
+  calculate(false);
+  var tt = document.getElementById('totalTime');
+  if (tt) document.getElementById('partsContainer').appendChild(tt);
 }
 function removePart(id){
   const row=document.getElementById(`part-${id}`);
@@ -114,6 +116,12 @@ function calculate(showAlert=true){
   const laborFixed   = Number(document.getElementById('laborRange').value)||0;
   const marginPercent= Number(document.getElementById('marginRange').value)||0;
   const wastePercent = Number(document.getElementById('wasteRange').value)||0;
+
+  /* PROJECT NAME VALIDATION */
+  if (!document.getElementById('projectName').value.trim()) {
+    if (showAlert) alert('El nombre del proyecto es obligatorio');
+    return;
+  }
 
   /* PARTS */
   let totalWeight=0,totalMinutes=0;
@@ -160,15 +168,11 @@ function calculate(showAlert=true){
   if(!totalTimeEl){
     totalTimeEl=document.createElement('div');
     totalTimeEl.id='totalTime';
-    totalTimeEl.className='text-xs font-medium text-slate-400 mt-2';
+    totalTimeEl.className='text-xs font-medium text-[#00ff41] mt-2';
     document.getElementById('partsContainer').appendChild(totalTimeEl);
   }
   totalTimeEl.innerText=`Total: ${totalHours}h ${remMins}m`;
-  
-  // Mostrar alerta solo si es una llamada del usuario
-  if(showAlert) {
-    alert('Cálculo completado exitosamente');
-  }
+
 }
 
 /* -----------------------  PROGRESS BAR & BREAKDOWN  ---------- */
@@ -188,11 +192,11 @@ function updateVisuals(filament,energy,waste,labor,profit,total){
   const listEl=document.getElementById('breakdownList');
   listEl.innerHTML='';
   const data=[
-    {label:'Filamento + Wastage',val:filament,color:'#3b82f6'},
-    {label:'Energía (kWh)',      val:energy, color:'#f59e0b'},
-    {label:'Desperdicio (Waste)',val:waste,  color:'#ec4899'}, // NUEVO
-    {label:'Setup / Labor',       val:labor,  color:'#a855f7'},
-    {label:'Margen Ganancia',     val:profit, color:'#22c55e'}
+    {label:'Filamento + Wastage',val:filament,color:'#14532d'},
+    {label:'Energía (kWh)',      val:energy, color:'#15803d'},
+    {label:'Desperdicio (Waste)',val:waste,  color:'#22c55e'},
+    {label:'Setup / Labor',       val:labor,  color:'#4ade80'},
+    {label:'Margen Ganancia',     val:profit, color:'#86efac'}
   ];
   data.forEach(item=>{
     const row=document.createElement('div');
@@ -358,11 +362,11 @@ async function generatePdf() {
     const getPct = (v) => ((v / data.chart.totalSum) * 100).toFixed(1);
 
     const bars = [
-      { key: 'filament', label: 'Filamento', color: 'gradient-blue', val: data.chart.filament },
-      { key: 'energy',   label: 'Energía',   color: 'gradient-yellow', val: data.chart.energy },
-      { key: 'waste',    label: 'Desperdicio', color: 'gradient-pink', val: data.chart.waste },
-      { key: 'labor',    label: 'Setup',     color: 'gradient-purple', val: data.chart.labor },
-      { key: 'profit',   label: 'Ganancia',   color: 'gradient-green', val: data.chart.profit },
+      { key: 'filament', label: 'Filamento', color: 'gradient-dark', val: data.chart.filament },
+      { key: 'energy',   label: 'Energía',   color: 'gradient-mid', val: data.chart.energy },
+      { key: 'waste',    label: 'Desperdicio', color: 'gradient-green', val: data.chart.waste },
+      { key: 'labor',    label: 'Setup',     color: 'gradient-light', val: data.chart.labor },
+      { key: 'profit',   label: 'Ganancia',   color: 'gradient-bright', val: data.chart.profit },
     ];
     const maxVal = Math.max(...bars.map(b => b.val), 1);
 
@@ -374,11 +378,12 @@ async function generatePdf() {
     let chartBars = '';
     bars.forEach(b => {
       const pct = getPct(b.val);
-      const h = Math.max((b.val / maxVal) * 100, 4);
-      const showInside = h >= 22;
+      const h = Math.max((b.val / maxVal) * 160, 8);
       chartBars += `<div class="chart-bar-wrapper">
-        ${!showInside ? `<div class="pct-label">${pct}%</div>` : ''}
-        <div class="bar-container ${b.color}" style="height:${h}px;display:flex;align-items:flex-start;justify-content:center;padding-top:3px;font-size:10px;font-weight:700;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.35);">${showInside ? pct + '%' : ''}</div>
+        <div style="display:flex;align-items:flex-end;gap:6px;">
+          <div class="bar-container ${b.color}" style="height:${h}px;"></div>
+          <span style="font-size:12px;font-weight:700;color:#1e293b;padding-bottom:4px;">${pct}%</span>
+        </div>
         <div class="bar-name">${b.label}</div>
       </div>`;
     });
@@ -386,13 +391,13 @@ async function generatePdf() {
     const breakdownRows = bars.map(b =>
       `<div style="display:flex;justify-content:space-between;padding:4px 0;font-size:11px;">
         <span style="color:#64748b">${b.label}</span>
-        <span style="font-weight:600;color:#334155">${formatCurrency(b.val)}</span>
+        <span style="font-weight:600;color:#1e293b">${formatCurrency(b.val)}</span>
       </div>`
     ).join('');
 
     const html = `<div id="pdf-container">
       <div class="pdf-header">
-        <div class="logo-main">Costo 3D Pro</div>
+        <div class="pdf-logo"><span style="color:#1e293b">Costo</span> <span style="color:#16a34a">3D</span> <span style="color:#1e293b">Pro</span></div>
         <div style="font-size:11px;color:#64748b;text-align:right">
           <div>${data.projectName}</div>
           <div>${new Date().toLocaleDateString('es-CO')}</div>
@@ -415,7 +420,7 @@ async function generatePdf() {
       <div class="section-box chart-box" style="padding:20px">
         <h3 style="font-size:12px;font-weight:600;color:#1e293b;margin:0 0 10px 0;text-transform:uppercase;letter-spacing:0.2em">Distribución de Costos</h3>
         <div class="charts-row-container">${chartBars}</div>
-        <div style="margin-top:20px;border-top:1px solid #f1f5f9;padding-top:12px">${breakdownRows}</div>
+        <div style="margin-top:20px;border-top:1px solid #e2e8f0;padding-top:12px">${breakdownRows}</div>
       </div>
 
       <div class="total-card">
